@@ -21,7 +21,8 @@ public class InMemoryKorisnikService implements KorisniciServis {
     private void iniDataForTesting() {
 		
 		save(new Korisnik("Petar", "Petrovic", "pero", "pero", true));
-		save(new Korisnik("Jovan", "Petrovic", "jovo", "jovo", false));    }
+		save(new Korisnik("Jovan", "Petrovic", "jovo", "jovo", false));    
+		}
 	
 	
 	
