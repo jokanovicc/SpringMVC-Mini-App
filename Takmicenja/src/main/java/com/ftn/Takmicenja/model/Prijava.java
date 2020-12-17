@@ -1,19 +1,29 @@
 package com.ftn.Takmicenja.model;
 
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 
 public class Prijava {
+	private Long id;
 	private Korisnik korisnik;
 	private String drzava;
 	private Disciplina disciplina;
-	private SimpleDateFormat datum;
+	private LocalDateTime datum;
+	private Takmicenje takmicenje;
 	
-	public Prijava(Korisnik korisnik, String drzava, Disciplina disciplina, SimpleDateFormat datum) {
+
+
+
+
+
+	public Prijava(Long id, Korisnik korisnik, String drzava, Disciplina disciplina, LocalDateTime datum,
+			Takmicenje takmicenje) {
 		super();
+		this.id = id;
 		this.korisnik = korisnik;
 		this.drzava = drzava;
 		this.disciplina = disciplina;
 		this.datum = datum;
+		this.takmicenje = takmicenje;
 	}
 
 	public Korisnik getKorisnik() {
@@ -40,12 +50,34 @@ public class Prijava {
 		this.disciplina = disciplina;
 	}
 
-	public SimpleDateFormat getDatum() {
+
+	
+	
+	public LocalDateTime getDatum() {
 		return datum;
 	}
 
-	public void setDatum(SimpleDateFormat datum) {
+	public void setDatum(LocalDateTime datum) {
 		this.datum = datum;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	
+	
+	
+	public Takmicenje getTakmicenje() {
+		return takmicenje;
+	}
+
+	public void setTakmicenje(Takmicenje takmicenje) {
+		this.takmicenje = takmicenje;
 	}
 
 	@Override

@@ -1,22 +1,74 @@
 package com.ftn.Takmicenja.model;
 
 public class Korisnik {
-	
-	private String ime;
-	private String prezime;
-	private String korisnickoIme;
-	private String korisnickaSifra;
-	private boolean isAdministrator;
+	String ime="", prezime="", korisnickoIme="", korisnickaSifra="";
+	private Long id;
+	boolean administrator = false;
+	boolean ulogovan=false;
 	
 	
-	public Korisnik(String ime, String prezime, String korisnickoIme, String korisnickaSifra, boolean isAdministrator) {
+	public Korisnik() {
+		super();
+	}
+
+
+	
+	
+
+	public Korisnik(String ime, String prezime, String korisnickoIme, String korisnickaSifra, Long id,
+			boolean administrator, boolean ulogovan) {
 		super();
 		this.ime = ime;
 		this.prezime = prezime;
 		this.korisnickoIme = korisnickoIme;
 		this.korisnickaSifra = korisnickaSifra;
-		this.isAdministrator = isAdministrator;
+		this.id = id;
+		this.administrator = administrator;
+		this.ulogovan = ulogovan;
 	}
+
+
+
+
+
+	public Korisnik(String ime, String prezime, String korisnickoIme, String korisnickaSifra) {
+		super();
+		this.ime = ime;
+		this.prezime = prezime;
+		this.korisnickoIme = korisnickoIme;
+		this.korisnickaSifra = korisnickaSifra;
+	}
+	
+	
+
+
+	public Korisnik(String ime, String prezime, String korisnickoIme, String korisnickaSifra, boolean administrator) {
+		super();
+		this.ime = ime;
+		this.prezime = prezime;
+		this.korisnickoIme = korisnickoIme;
+		this.korisnickaSifra = korisnickaSifra;
+		this.administrator = administrator;
+	}
+
+
+
+	
+
+	public Long getId() {
+		return id;
+	}
+
+
+
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+
 
 
 	public String getIme() {
@@ -59,20 +111,41 @@ public class Korisnik {
 	}
 
 
+	
+
+
 	public boolean isAdministrator() {
-		return isAdministrator;
+		return administrator;
 	}
 
 
-	public void setAdministrator(boolean isAdministrator) {
-		this.isAdministrator = isAdministrator;
+
+
+	public void setAdministrator(boolean administrator) {
+		this.administrator = administrator;
 	}
+
+
+
+
+	public boolean isUlogovan() {
+		return ulogovan;
+	}
+
+
+
+
+	public void setUlogovan(boolean ulogovan) {
+		this.ulogovan = ulogovan;
+	}
+
+
 
 
 	@Override
 	public String toString() {
 		return "Korisnik [ime=" + ime + ", prezime=" + prezime + ", korisnickoIme=" + korisnickoIme
-				+ ", korisnickaSifra=" + korisnickaSifra + ", isAdministrator=" + isAdministrator + "]";
+				+ ", korisnickaSifra=" + korisnickaSifra;
 	}
 	
 	

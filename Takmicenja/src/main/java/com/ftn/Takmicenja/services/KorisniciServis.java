@@ -7,6 +7,7 @@ import com.ftn.Takmicenja.model.Korisnik;
 
 public interface KorisniciServis {
 
+	Korisnik findOne(Long id); 
 	Korisnik findOne(String korisnickoIme); 
 	Korisnik findOne(String korisnickoIme, String korisnickaSifra);
 	List<Korisnik> findAll(); 
@@ -19,6 +20,7 @@ public interface KorisniciServis {
 	List<Korisnik> findByIme(String ime);
 	List<Korisnik> findByPrezime(String prezime);
 	List<Korisnik> findByAdministrator(boolean administrator);
+	List<Korisnik> findByUlogovan(boolean ulogovan);
 	
 	
 }

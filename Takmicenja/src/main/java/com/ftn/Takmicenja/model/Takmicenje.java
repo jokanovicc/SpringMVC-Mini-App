@@ -1,36 +1,44 @@
 package com.ftn.Takmicenja.model;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class Takmicenje {
+	
+	private Long id;
 	private String naziv;
-	private enum Tip{
-		DVORANA,
-		OTVORENO
-	}
-	private Tip tip;
+	private String tipTakmicenja;
 	
 	private String grad;
 	private String drzava;
-	private SimpleDateFormat datumPocetka;
-	private SimpleDateFormat datumZavrsetka;
+	private LocalDateTime datumPocetka;
+	private LocalDateTime datumZavrsetka;
 	private List<Disciplina> discipline = new ArrayList<>();
 	
+
 	
-	public Takmicenje(String naziv, Tip tip, String grad, String drzava, SimpleDateFormat datumPocetka,
-			SimpleDateFormat datumZavrsetka, List<Disciplina> discipline) {
+
+
+
+
+
+	public Takmicenje(Long id, String naziv, String tipTakmicenja, String grad, String drzava,
+			LocalDateTime datumPocetka, LocalDateTime datumZavrsetka, List<Disciplina> discipline) {
 		super();
+		this.id = id;
 		this.naziv = naziv;
-		this.tip = tip;
+		this.tipTakmicenja = tipTakmicenja;
 		this.grad = grad;
 		this.drzava = drzava;
 		this.datumPocetka = datumPocetka;
 		this.datumZavrsetka = datumZavrsetka;
 		this.discipline = discipline;
 	}
+
+
 
 
 	public String getNaziv() {
@@ -43,13 +51,26 @@ public class Takmicenje {
 	}
 
 
-	public Tip getTip() {
-		return tip;
+
+
+
+	public Long getId() {
+		return id;
 	}
 
 
-	public void setTip(Tip tip) {
-		this.tip = tip;
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+	public String getTipTakmicenja() {
+		return tipTakmicenja;
+	}
+
+
+	public void setTipTakmicenja(String tipTakmicenja) {
+		this.tipTakmicenja = tipTakmicenja;
 	}
 
 
@@ -73,22 +94,24 @@ public class Takmicenje {
 	}
 
 
-	public SimpleDateFormat getDatumPocetka() {
+
+
+	public LocalDateTime getDatumPocetka() {
 		return datumPocetka;
 	}
 
 
-	public void setDatumPocetka(SimpleDateFormat datumPocetka) {
+	public void setDatumPocetka(LocalDateTime datumPocetka) {
 		this.datumPocetka = datumPocetka;
 	}
 
 
-	public SimpleDateFormat getDatumZavrsetka() {
+	public LocalDateTime getDatumZavrsetka() {
 		return datumZavrsetka;
 	}
 
 
-	public void setDatumZavrsetka(SimpleDateFormat datumZavrsetka) {
+	public void setDatumZavrsetka(LocalDateTime datumZavrsetka) {
 		this.datumZavrsetka = datumZavrsetka;
 	}
 
@@ -97,18 +120,36 @@ public class Takmicenje {
 		return discipline;
 	}
 
+	
+	
+	
+	public ArrayList<Long> getDiscID(){
+		ArrayList<Long> deoID = new ArrayList<Long>();
+		for (Disciplina deo1 : discipline) {
+			deoID.add(deo1.getId());
+			
+		}
+		return deoID;
+	}
+	
+	
 
 	public void setDiscipline(List<Disciplina> discipline) {
 		this.discipline = discipline;
 	}
 
 
+
+
 	@Override
 	public String toString() {
-		return "Takmicenje [naziv=" + naziv + ", tip=" + tip + ", grad=" + grad + ", drzava=" + drzava
-				+ ", datumPocetka=" + datumPocetka + ", datumZavrsetka=" + datumZavrsetka + ", discipline=" + discipline
-				+ "]";
+		return "Takmicenje [id=" + id + ", naziv=" + naziv + ", tipTakmicenja=" + tipTakmicenja + ", grad=" + grad
+				+ ", drzava=" + drzava + ", datumPocetka=" + datumPocetka + ", datumZavrsetka=" + datumZavrsetka
+				+ ", discipline=" + discipline + "]";
 	}
+
+
+
 	
 	
 	

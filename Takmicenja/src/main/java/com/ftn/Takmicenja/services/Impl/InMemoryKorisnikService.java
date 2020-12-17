@@ -1,37 +1,43 @@
-package com.ftn.Takmicenja.servicesImpl;
+package com.ftn.Takmicenja.services.Impl;
 
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
 
 import com.ftn.Takmicenja.model.Korisnik;
 import com.ftn.Takmicenja.services.KorisniciServis;
 
-
 @Service
-public class InMemoryKorisnikService implements KorisniciServis {
-	
+public class InMemoryKorisnikService implements KorisniciServis{
+
+
 	HashMap<String, Korisnik> korisnici = new HashMap<String, Korisnik>();
 
-	@PostConstruct
-    private void iniDataForTesting() {
-		
-		save(new Korisnik("Petar", "Petrovic", "pero", "pero", true));
-		save(new Korisnik("Jovan", "Petrovic", "jovo", "jovo", false));    
-		}
 	
-	
-	
-	
-	
-	
-	
-	
-	
+	  @PostConstruct private void iniDataForTesting() {
+		  
+		  //tek kasnije sam shvatio da i korisnici trebaju u txt pa nisam hteo ispocetka ovaj deo. Odradjeni su servisi ali su podaci inmemory a ne citaju se iz fajla
+	  
+	  save(new Korisnik("Petar", "Petarović", "pera", "pera",true));
+	  save(new Korisnik("Yelena", "Isinbayeva", "yelena", "yelena"));
+	  save(new Korisnik("Mihail", "Dudas", "mihail", "mihail"));
+	  save(new Korisnik("Ivana", "Spanovic", "ivana", "ivana"));
+	  
+	  }
+	 
+
 	@Override
 	public Korisnik findOne(String korisnickoIme) {
 		return korisnici.get(korisnickoIme);
@@ -40,7 +46,7 @@ public class InMemoryKorisnikService implements KorisniciServis {
 	@Override
 	public Korisnik findOne(String korisnickoIme, String korisnickaSifra) {
 		Korisnik korisnik = findOne(korisnickoIme);
-		if(korisnik!=null && korisnik.getKorisnickaSifra().equals(korisnickaSifra))
+		if (korisnik != null && korisnik.getKorisnickaSifra().equals(korisnickaSifra))
 			return korisnik;
 		return null;
 	}
@@ -52,12 +58,12 @@ public class InMemoryKorisnikService implements KorisniciServis {
 
 	@Override
 	public Korisnik save(Korisnik korisnik) {
-		//u slučaju da bazi nema korisnik za korisnickoIme
-		//tada se radi o insert novog korisnika
+		// u slučaju da bazi nema korisnik za korisnickoIme
+		// tada se radi o insert novog korisnika
 		if (korisnici.get(korisnik.getKorisnickoIme()) == null) {
 			korisnici.put(korisnik.getKorisnickoIme(), korisnik);
 		}
-		
+
 		return korisnik;
 	}
 
@@ -83,12 +89,12 @@ public class InMemoryKorisnikService implements KorisniciServis {
 
 	@Override
 	public Korisnik update(Korisnik korisnik) {
-		//u slučaju da bazi postoji korisnik za korisnickoIme
-		//tada se radi o update postojeceg korisnika
+		// u slučaju da bazi postoji korisnik za korisnickoIme
+		// tada se radi o update postojeceg korisnika
 		if (korisnici.get(korisnik.getKorisnickoIme()) != null) {
 			korisnici.put(korisnik.getKorisnickoIme(), korisnik);
 		}
-				
+
 		// TODO Auto-generated method stub
 		return korisnik;
 	}
@@ -129,7 +135,7 @@ public class InMemoryKorisnikService implements KorisniciServis {
 			// pozivamo postojeću metodu za svaki
 			delete(korisnickoIme);
 		}
-		
+
 	}
 
 	@Override
@@ -168,5 +174,23 @@ public class InMemoryKorisnikService implements KorisniciServis {
 		return ret;
 	}
 
-	
+	@Override
+	public List<Korisnik> findByUlogovan(boolean ulogovan) {
+		List<Korisnik> ret = new ArrayList<>();
+
+		for (Korisnik k : korisnici.values()) {
+			if (ulogovan == k.isUlogovan()) {
+				ret.add(k);
+			}
+		}
+		return ret;
+	}
+
+
+	@Override
+	public Korisnik findOne(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

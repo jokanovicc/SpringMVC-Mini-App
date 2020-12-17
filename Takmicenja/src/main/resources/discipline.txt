@@ -1,0 +1,8 @@
+1;Dvoboj
+2;Macevanje
+4;Kuglanje
+3;Nesto
+5;Skokovi
+6;Trcanje
+7;kladiva
+8;kugle
