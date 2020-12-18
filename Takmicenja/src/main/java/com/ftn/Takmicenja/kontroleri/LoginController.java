@@ -21,7 +21,7 @@ import com.ftn.Takmicenja.services.KorisniciServis;
 
 @Controller
 @RequestMapping(value="/PrijavaOdjava")
-public class PrijavaOdjavaController {
+public class LoginController {
 	
 	public static final String KORISNIK_KEY = "korisnik";
 	
@@ -101,7 +101,7 @@ public class PrijavaOdjavaController {
 		
 		if (korisnik.isUlogovan()==true)
 			greska="korisnik je prijavljen negde, potrebno je odjaviti se<br/>";
-		else if (session.getAttribute(PrijavaOdjavaController.KORISNIK_KEY)!=null)
+		else if (session.getAttribute(LoginController.KORISNIK_KEY)!=null)
 			greska="korisnik je već prijavljen na sistem morate se prethodno odjaviti<br/>";
 		
 		if(!greska.equals("")) {
@@ -138,7 +138,7 @@ public class PrijavaOdjavaController {
 		}
 		
 		korisnik.setUlogovan(true);
-		session.setAttribute(PrijavaOdjavaController.KORISNIK_KEY, korisnik);
+		session.setAttribute(LoginController.KORISNIK_KEY, korisnik);
 		
 		
 		response.sendRedirect(bURL+"Takmicenje");

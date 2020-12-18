@@ -34,6 +34,7 @@ import com.ftn.Takmicenja.services.PrijavaService;
 import com.ftn.Takmicenja.services.TakmicenjaService;
 import com.ftn.Takmicenja.services.Impl.TakmicenjeImpl;
 
+
 @Controller
 @RequestMapping(value="/Takmicenje")
 public class TakmicenjaKontroler {
@@ -71,7 +72,7 @@ public class TakmicenjaKontroler {
 		StringBuilder retVal = new StringBuilder();
 		
 		//preuzimanje vrednosti iz sesije za klijenta
-		Korisnik korisnik = (Korisnik) session.getAttribute(PrijavaOdjavaController.KORISNIK_KEY);
+		Korisnik korisnik = (Korisnik) session.getAttribute(LoginController.KORISNIK_KEY);
 		if(korisnik==null) {
 			response.sendRedirect(bURL+"login.html");
 			return "";
@@ -133,11 +134,11 @@ public class TakmicenjaKontroler {
 						"				</td>");
 				
 						if (korisnik.isAdministrator()==false) {
-							retVal.append("				<td>"+				
-									"					<a href=\"Prijave/Create?takmicenjeID="+takmicenja.get(i).getId()+"\">Prijavi</a>" + 
-									"					<form action=\"Prijave/Create\" method=\"get\">" + 
-									"						<input type=\"hidden\" name=\"takmicenjeID\" value=\""+takmicenja.get(i).getId()+"\"/>" + 
-									"					</form>" + 
+							retVal.append(						"				<td>\r\n"+				
+									"					<a href=\"Prijave/Create?takmicenjeID="+takmicenja.get(i).getId()+"\">Prijavi se</a>\r\n" + 
+									"					<form action=\"Prijave/Create\" method=\"get\">\r\n" + 
+									"						<input type=\"hidden\" name=\"takmicenjeID\" value=\""+takmicenja.get(i).getId()+"\"/>\r\n" + 
+									"					</form>\r\n" + 
 									"				</td>");
 							
 						}
@@ -193,13 +194,13 @@ public class TakmicenjaKontroler {
 
 		
 		//preuzimanje vrednosti iz sesije za klijenta
-		Korisnik korisnik = (Korisnik) session.getAttribute(PrijavaOdjavaController.KORISNIK_KEY);
+		Korisnik korisnik = (Korisnik) session.getAttribute(LoginController.KORISNIK_KEY);
 		if(korisnik==null) {
 			response.sendRedirect(bURL+"login.html");
 			return "";
 		}
 
-		
+		List<Disciplina> d = discService.findAll();
 
 		Takmicenje takmicenje = takmicenjaService.findOne(id);
 		if(takmicenje==null) {
@@ -244,26 +245,30 @@ public class TakmicenjaKontroler {
 			 				"<td>" +
 			 					"<input type=\"date\" value=\""+takmicenje.getDatumZavrsetka().toLocalDate()+"\" name=\"datum2\"/>&nbsp;"+
 			 					"<input type=\"time\" value=\""+takmicenje.getDatumZavrsetka().toLocalTime()+"\" name=\"vreme2\"/>"+
-			 				"</td>"+
-			 			"</tr>\r\n");
-		
-		retVal.append(
-				"			<tr>\r\n"+
-				"				<th>disciplina:</th>\r\n"+
-				"				<td>\r\n"+		
-				"					<select name=\"disciplinaID\">\r\n");
-		for (Disciplina disciplina : discService.findAll()) {
-			retVal.append(
-				"						<option value=\""+disciplina.getId()+"\" "+(disciplina.equals(takmicenje.getDiscipline())?"selected":"")+">"+disciplina.getNaziv()+"</option>\r\n");
-		}
-		
-		retVal.append(
-				"					</select>\r\n"+
-				"				</td>\n\r"+
-				"			</tr>\r\n");
-		retVal.append(				"			<tr>\r\n" + 
-				"				<th>tip:</th>\r\n" + 
-				"				<td>\r\n" + 
+				 				"</td>"+
+				 			"</tr>\r\n");
+						retVal.append("<tr>"
+								+ "	<th>Izaberi discipline:</th>"
+									+ "<td>");
+							for (Disciplina ds: d) {
+							if (takmicenje.getDiscipline().contains(ds)) {
+								retVal.append(
+										"					<input type=\"checkbox\" name=\"dId\" value=\"" + ds.getId() + "\" checked/><span>" + ds.getNaziv() + "</span><br/>\r\n"
+										);
+							} else {
+								retVal.append(
+										"					<input type=\"checkbox\" name=\"dId\" value=\"" + ds.getId() + "\"/><span>" + ds.getNaziv() + "</span><br/>\r\n"
+										);
+							}
+						}
+			
+			retVal.append(				"				</td>" + 
+					"			</tr>" + 
+					"				</td>"+
+					"			</tr>");
+			retVal.append(				"			<tr>" + 
+				"				<th>tip:</th>" + 
+				"				<td>" + 
 				"					<select name=\"tip\">\r\n" + 
 				"						<option value=\"Otvoreno\"" + (takmicenje.getTipTakmicenja().equals("Otvoreno")? " selected": "") + ">Otvoreno</option>\r\n" + 
 				"						<option value=\"Zatvoreno\"" + (takmicenje.getTipTakmicenja().equals("Zatvoreno")? " selected": "") + ">Zatvoreno</option>\r\n" + 
@@ -316,21 +321,21 @@ public class TakmicenjaKontroler {
 			@RequestParam @DateTimeFormat(iso=DateTimeFormat.ISO.TIME) LocalTime vreme,
 			@RequestParam @DateTimeFormat(iso=DateTimeFormat.ISO.DATE) LocalDate datum2, 
 			@RequestParam @DateTimeFormat(iso=DateTimeFormat.ISO.TIME) LocalTime vreme2, 
-			@RequestParam String naziv, @RequestParam String grad, @RequestParam String drzava, @RequestParam String tip,
+			@RequestParam String naziv, @RequestParam String grad, @RequestParam String drzava, @RequestParam String tip,@RequestParam(name="dId", required=false) Long[] discIds,
 			
 			HttpSession session, HttpServletResponse response) throws IOException {
 		
 	
 		
 		//preuzimanje vrednosti iz sesije za klijenta
-		Korisnik korisnik = (Korisnik) session.getAttribute(PrijavaOdjavaController.KORISNIK_KEY);
+		Korisnik korisnik = (Korisnik) session.getAttribute(LoginController.KORISNIK_KEY);
 		if(korisnik==null || korisnik.isAdministrator()==false) {
 			response.sendRedirect(bURL+"login.html");
 		}
 		
+		//discipline nisu vec cekirane nego moraju ispocetka
 		
-		//discipline se ne mogu izmeniti jer nisam uspeo da implementiram zajedno sa listom
-		
+		List<Disciplina> d = discService.find(discIds);
 		
 
 		// validacija
@@ -344,16 +349,23 @@ public class TakmicenjaKontroler {
 		LocalDateTime datumIVreme2 = LocalDateTime.of(datum2, vreme2);
 		
 		
-		if (datumIVreme1.isAfter(LocalDateTime.now())) {
-			takmicenje.setDatumPocetka(datumIVreme1);
-			
-		}
-		if (datumIVreme2.isAfter(LocalDateTime.now())) {
-			takmicenje.setDatumPocetka(datumIVreme2);
+		
+		if (d.size() != 0) {
+			takmicenje.setDiscipline(d);     //ovo provera sta je selektovano, promenice discipline samo ako je selektovano nesto novo
 			
 		}
 		
-
+		
+		
+		  if (datumIVreme1.isAfter(LocalDateTime.now())) {
+		  takmicenje.setDatumPocetka(datumIVreme1);
+		  
+		  } if (datumIVreme2.isAfter(datumIVreme1)) {
+		  takmicenje.setDatumZavrsetka(datumIVreme2);
+		  
+		  }
+		 
+		
 
 		takmicenje.setDrzava(drzava);
 		takmicenje.setGrad(grad);
@@ -371,7 +383,7 @@ public class TakmicenjaKontroler {
 
 		
 		//preuzimanje vrednosti iz sesije za klijenta
-		Korisnik korisnik = (Korisnik) session.getAttribute(PrijavaOdjavaController.KORISNIK_KEY);
+		Korisnik korisnik = (Korisnik) session.getAttribute(LoginController.KORISNIK_KEY);
 		if(korisnik==null || korisnik.isAdministrator()==false) {
 			response.sendRedirect(bURL+"login.html");
 		}

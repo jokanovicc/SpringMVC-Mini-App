@@ -76,7 +76,7 @@ public class PrijavaKontroler {
 
 
 		//preuzimanje vrednosti iz sesije za klijenta
-		Korisnik korisnik = (Korisnik) request.getSession().getAttribute(PrijavaOdjavaController.KORISNIK_KEY);
+		Korisnik korisnik = (Korisnik) request.getSession().getAttribute(LoginController.KORISNIK_KEY);
 		if(korisnik==null) {
 			response.sendRedirect(bURL+"login.html");
 			return;
@@ -134,8 +134,7 @@ public class PrijavaKontroler {
 		
 		
 		
-		
-		//OVDE PUCA
+
 		
 		
 		
@@ -182,7 +181,7 @@ public class PrijavaKontroler {
 	
 
 	@GetMapping(value="/Create")
-	public void Create(@RequestParam(name="tamID", required=false) Long tamID, HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void Create(@RequestParam(name="takmicenjeID", required=false) Long takmicenjeID, HttpServletRequest request, HttpServletResponse response) throws IOException{
 //		response.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate"); // HTTP 1.1
 //		response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
 //		response.setDateHeader("Expires", 0); // Proxies.
@@ -190,28 +189,31 @@ public class PrijavaKontroler {
 		Long discID = 1L;
 
 		//preuzimanje vrednosti iz sesije za klijenta
-		Korisnik korisnik = (Korisnik) request.getSession().getAttribute(PrijavaOdjavaController.KORISNIK_KEY);
+		Korisnik korisnik = (Korisnik) request.getSession().getAttribute(LoginController.KORISNIK_KEY);
 		if(korisnik==null) {
 			response.sendRedirect(bURL+"login.html");
 			return;
 		}
 		
-
-		if(tamID!=null && tamID<=0) {
+		if(takmicenjeID!=null && takmicenjeID<=0) {
 			response.sendRedirect(bURL+"Takmicenje");
 			return;
 		}
+		Takmicenje takmicenje = null;
+		if(takmicenjeID!=null && takmicenjaService.findOne(takmicenjeID)!=null) {
+			takmicenje = takmicenjaService.findOne(takmicenjeID);
+		}
+		
+		
+		
+		
 		
 		Disciplina disciplina = null;
 		if (discID!= null && discService.findOne(discID)!=null) {
 			disciplina = discService.findOne(discID);
 		}
 		
-		Takmicenje takmicenje = null;
-		if(tamID!=null && takmicenjaService.findOne(tamID)!=null) {
-			takmicenje = takmicenjaService.findOne(tamID);
-		}
-		
+
 		
 		
 		
@@ -236,27 +238,15 @@ public class PrijavaKontroler {
 				"	<div> Prijavljen je "+korisnik.getKorisnickoIme()+" "+ korisnik.getIme() +" "+ korisnik.getPrezime() +			
 				"	<form method=\"post\" action=\"Prijave/Create\">\r\n" + 
 				"		<table>\r\n" + 
-				"			<caption>Projekcija</caption>\r\n");
-		retVal.append(
-				"			<tr>\r\n"+
-				"				<th>takmicenje:</th>\r\n"+
-				"				<td>\r\n"+		
-				"					<select name=\"tamID\">\r\n");	
-		for (Takmicenje t : takmicenjaService.findAll()) {
-			retVal.append(
-				"						<option value=\""+t.getId()+"\" "+(t.equals(takmicenje)?"selected":"")+">"+t.getNaziv()+"</option>\r\n");    //nisam uspeo namapirati na post zahtev id takmicenja, pa sam alternativno ovako uradio
-		}	
-		retVal.append(
-				"					</select>\r\n"+
-				"				</td>\n\r"+
-				"			</tr>\r\n");
+				"			<caption>Prijava</caption>\r\n");
+
 		
 		retVal.append(
 				"			<tr>\r\n"+
 				"				<th>Discipline:</th>\r\n"+
 				"				<td>\r\n"+		
 				"					<select name=\"discID\">\r\n");	
-		for (Disciplina d : discService.findAll()) {
+		for (Disciplina d : takmicenje.getDiscipline()) { //ovde se biraju sve discipline, jer ne mogu pristupiti preko takmicenja jer baca null
 			retVal.append(
 				"						<option value=\""+d.getId()+"\" "+(d.equals(disciplina)?"selected":"")+">"+d.getNaziv()+"</option>\r\n");
 		}	
@@ -267,7 +257,8 @@ public class PrijavaKontroler {
 
 		
 		retVal.append(
-				"			<tr><th>drzava:</th><td><input type=\"text\" maxlength=\"3\" minlength=\"3\" required  name=\"drzava\"/></td></tr>\r\n" + 
+				"			<tr><th>drzava:</th><td><input type=\"text\" maxlength=\"3\" minlength=\"3\" required  name=\"drzava\"/></td></tr>\r\n" +
+						"		<tr><th>Takmicenje:</th><td><input type=\"text\" readonly value=\"" + takmicenje.getId() + "\"   name=\"takmicenjeID\"/></td></tr>\r\n" +
 				"			<tr><th></th><td><input type=\"submit\" value=\"Dodaj\" /></td></tr>\r\n" + 
 				"		</table>\r\n" + 
 				"	</form>\r\n" +
@@ -289,25 +280,25 @@ public class PrijavaKontroler {
 
 	@PostMapping(value="/Create")
 	public void Create(@RequestParam Long discID,
-			@RequestParam Long tamID, @RequestParam String drzava,
+			@RequestParam Long takmicenjeID, @RequestParam String drzava,
 			HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
 
 		
 		//preuzimanje vrednosti iz sesije za klijenta
-		Korisnik korisnik = (Korisnik) request.getSession().getAttribute(PrijavaOdjavaController.KORISNIK_KEY);
+		Korisnik korisnik = (Korisnik) request.getSession().getAttribute(LoginController.KORISNIK_KEY);
 		if(korisnik==null) {
 			response.sendRedirect(bURL+"login.html");
 			return;
 		}
 		
-		if(tamID!=null && tamID<=0) {
+		if(takmicenjeID!=null && takmicenjeID<=0) {
 			response.sendRedirect(bURL+"Takmicenja");
 			return;
 		}
 		Takmicenje takmicenje = null;
-		if(tamID!=null && takmicenjaService.findOne(tamID)!=null) {
-			takmicenje = takmicenjaService.findOne(tamID);
+		if(takmicenjeID!=null && takmicenjaService.findOne(takmicenjeID)!=null) {
+			takmicenje = takmicenjaService.findOne(takmicenjeID);
 		}
 		
 		Disciplina disciplina = null;
@@ -316,17 +307,13 @@ public class PrijavaKontroler {
 		}
 		
 		
-		if(tamID==null) {
+		if(takmicenjeID==null) {
 			response.sendRedirect(bURL+"Takmicenja");
 			return;
 		}
 		
 		
-		
-		if(tamID==null) {
-			response.sendRedirect(bURL+"Takmicenja");
-			return;
-		}
+	
 		
 		
 		

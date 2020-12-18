@@ -68,7 +68,7 @@ public class SvojePrijaveKontroler {
 		StringBuilder retVal = new StringBuilder();
 		
 		//preuzimanje vrednosti iz sesije za klijenta
-		Korisnik korisnik = (Korisnik) session.getAttribute(PrijavaOdjavaController.KORISNIK_KEY);
+		Korisnik korisnik = (Korisnik) session.getAttribute(LoginController.KORISNIK_KEY);
 		if(korisnik==null) {
 			response.sendRedirect(bURL+"login.html");
 		}
@@ -92,7 +92,6 @@ public class SvojePrijaveKontroler {
 				"		<table>\r\n" + 
 				"			<caption>Takmicenja</caption>\r\n" + 
 				"			<tr bgcolor=\"DodgerBlue\">\r\n" + 
-				"				<th>r. br.</th>\r\n" + 
 				"				<th>Takmicenje</th>\r\n" + 
 				"				<th>Prijavljeni</th>\r\n" + 
 				"				<th>Drzava</th>\r\n" + 
@@ -110,7 +109,6 @@ public class SvojePrijaveKontroler {
 			if(korisnik.getKorisnickoIme().equals(prijave.get(i).getKorisnik().getKorisnickoIme())) {
 				retVal.append(
 						"			<tr>\r\n" + 
-								"				<td class=\"broj\">"+ (i+1) +"</td>\r\n" +
 								"<td>"  +prijave.get(i).getTakmicenje().getNaziv() +        "</td>" +
 
 								"<td>" + prijave.get(i).getKorisnik().getIme() + " " +prijave.get(i).getKorisnik().getPrezime() +      "</td>"+
