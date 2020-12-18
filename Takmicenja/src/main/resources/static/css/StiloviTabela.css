@@ -1,13 +1,21 @@
+*{
+	 font-family: Verdana, sans-serif;
+}
+
+
+
 table {
 	border-collapse: collapse;
 }
 
 caption {
-	font-size: 16pt
+	font-size: 18pt;
+	padding-top: 18px;
+	padding-bottom: 18px;
 }
 
 th, td {
-	border: 1px solid Gray;
+	border: 1.5px solid #D3D3D3;
 	padding: 5px;
 }
 
@@ -17,11 +25,11 @@ td.broj {
 
 th {
 	color: white;
-	background-color: DodgerBlue;
+	background-color: #008B8B;
 }
 
 tr:nth-child(even) {
-	background-color: LightGray;
+	background-color: #D3D3D3;
 }
 
 input[type="search"] {

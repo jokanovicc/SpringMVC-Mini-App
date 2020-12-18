@@ -91,7 +91,7 @@ public class TakmicenjaKontroler {
 				"	<link rel=\"stylesheet\" type=\"text/css\" href=\"css/StiloviHorizontalniMeni.css\"/>\r\n"+
 				"</head>\r\n" + 
 				"<body> "+
-				"	<div> Prijavljen je "+ korisnik.getIme() +" "+ korisnik.getPrezime());
+				"	<div> Prijavljen je:  <strong> "+ korisnik.getIme() +" "+ korisnik.getPrezime() + "</strong> <hr>");
 			
 		retVal.append(	
 				"		<table>\r\n" + 
@@ -224,7 +224,7 @@ public class TakmicenjaKontroler {
 				"	<link rel=\"stylesheet\" type=\"text/css\" href=\"css/StiloviHorizontalniMeni.css\"/>\r\n"+
 				"</head>\r\n" + 
 				"<body>\r\n" +
-				"	<div> Prijavljen je " +korisnik.getKorisnickoIme()+" "+ korisnik.getIme() +" "+ korisnik.getPrezime() +				
+				"	<div> Prijavljen je:  <strong> "+ korisnik.getIme() +" "+ korisnik.getPrezime() + "</strong> <hr>" +		
 				"	<form method=\"post\" action=\"Takmicenje/Edit\">\r\n" + 
 				"		<input type=\"hidden\" name=\"id\" value=\""+takmicenje.getId()+"\">\r\n" + 
 				"		<table>\r\n" + 

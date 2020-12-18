@@ -86,7 +86,7 @@ public class SvojePrijaveKontroler {
 				"	<link rel=\"stylesheet\" type=\"text/css\" href=\"css/StiloviHorizontalniMeni.css\"/>\r\n"+
 				"</head>\r\n" + 
 				"<body> "+
-				"	<div> Prijavljen je "+ korisnik.getIme() +" "+ korisnik.getPrezime());
+				"	<div> Prijavljen je:  <strong> "+ korisnik.getIme() +" "+ korisnik.getPrezime() + "</strong> <hr>");
 			
 		retVal.append(	
 				"		<table>\r\n" + 

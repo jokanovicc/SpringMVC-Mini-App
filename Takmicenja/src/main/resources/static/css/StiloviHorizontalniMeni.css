@@ -1,5 +1,10 @@
+*{
+	 font-family: Verdana, sans-serif;
+}
+
+
 table.horizontalni-meni {
-	margin-top: 20px;
+	margin-top: 50px;
 }
 table.horizontalni-meni ul {
 	display: inline;
@@ -13,5 +18,5 @@ table.horizontalni-meni li {
 	background-color: White;
 }
 table.horizontalni-meni td {
-	background-color: DodgerBlue;
+	background-color: #008B8B;
 }

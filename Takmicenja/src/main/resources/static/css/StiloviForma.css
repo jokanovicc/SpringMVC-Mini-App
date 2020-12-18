@@ -1,31 +1,38 @@
+*{
+	 font-family: Verdana, sans-serif;
+}
+
+
 table {
 	border-collapse: collapse;
 	margin: 5px;
 }
 
 caption {
-	font-size: 16pt
+	font-size: 18pt;
+	padding-top: 15px;
+	padding-bottom: 15px;
 }
 
 th, td {
-	border: 1px solid Gray;
+	border: 1.5px solid #D3D3D3;
 	padding: 5px;
 }
 
 th {
 	text-align: right;
-	width: 150px;
+	width: 180px;
 	color: white;
-	background-color: DodgerBlue;
+	background-color: #008B8B;
 }
 
 td {
 	background-color: White;
-	min-width: 250px;
+	min-width: 280px;
 }
 
 input, textarea, select {
-	width: 250px;
+	width: 280px;
 	box-sizing: border-box;
 }
 

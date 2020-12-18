@@ -108,7 +108,7 @@ public class PrijavaKontroler {
 				"	<link rel=\"stylesheet\" type=\"text/css\" href=\"css/StiloviHorizontalniMeni.css\"/>\r\n"+
 				"</head>\r\n" + 
 				"<body> "+
-				"	<div> Prijavljen je "+korisnik.getKorisnickoIme()+" "+ korisnik.getIme() +" "+ korisnik.getPrezime());
+				"	<div> Prijavljen je:  <strong> "+ korisnik.getIme() +" "+ korisnik.getPrezime() + "</strong>" +  "  |  ");
 		if(takmicenje!=null) {
 			retVal.append(
 				"	<a href=\"Takmicenje/Details?id="+takmicenje.getId()+"\">"+takmicenje.getNaziv() + "</a></li>\r\n");
@@ -118,7 +118,8 @@ public class PrijavaKontroler {
 				"		<li><a href=\"Prijave/Create?filmID="+takmicenje.getId()+"\">dodavanje projekcije za film</a></li>\r\n" + 
 				"	</ul>\r\n");
 		}*/
-		retVal.append("Prijavljeni takmicari za Takmicenje: " + "<strong>"  + takmicenje.getNaziv()+ "</strong>" + " " + "<strong>"  + takmicenje.getDatumPocetka()+ "</strong>" + "<strong>"  + takmicenje.getGrad() + "</strong>" + " " + "<strong>"  + takmicenje.getDrzava()+ "</strong>");
+			retVal.append("<hr>");
+		retVal.append(" Takmicenje se odrzava: "  + "<strong>"  + takmicenje.getGrad() + "</strong>" + " " + "<strong>"  + takmicenje.getDrzava()+ "</strong>");
 				
 		retVal.append(	
 				"		<table>\r\n" + 
@@ -235,7 +236,7 @@ public class PrijavaKontroler {
 				"	<link rel=\"stylesheet\" type=\"text/css\" href=\"css/StiloviHorizontalniMeni.css\"/>\r\n"+
 				"</head>\r\n" + 
 				"<body>\r\n" + 
-				"	<div> Prijavljen je "+korisnik.getKorisnickoIme()+" "+ korisnik.getIme() +" "+ korisnik.getPrezime() +			
+				"	<div> Prijavljen je:  <strong> "+ korisnik.getIme() +" "+ korisnik.getPrezime() + "</strong> <hr>" +		
 				"	<form method=\"post\" action=\"Prijave/Create\">\r\n" + 
 				"		<table>\r\n" + 
 				"			<caption>Prijava</caption>\r\n");
