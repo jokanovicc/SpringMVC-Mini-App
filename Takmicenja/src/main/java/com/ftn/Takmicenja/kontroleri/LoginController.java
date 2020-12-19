@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -55,7 +56,7 @@ public class LoginController {
 		Korisnik korisnik = korisnikService.findOne(korisnickoIme);
 		String greska = "";
 		if(korisnik==null)
-			greska="neispravno korisničko ime<br/>";
+			greska="Probajte ponovo<br/>";
 		else if (!korisnik.getKorisnickaSifra().equals(korisnickaSifra))
 			greska="neispravna korisnika šifra<br/>";
 		
@@ -91,8 +92,14 @@ public class LoginController {
 					"			<tr><th></th><td><input type=\"submit\" value=\"Prijavi se\" /></td>\r\n" + 
 					"		</table>\r\n" + 
 					"	</form>\r\n" + 
-					"	<br/>\r\n" + 
-					"</body>\r\n" + 
+					"	<br/>\r\n" +
+					
+					"						<hr>"
+					+ "						<h3>Test Podaci za korisnike su: </h3>"
+					+ "						<h4>Admin: pera | pera</h4>"
+					+ "						<h4>Takmicar: yelena | yelena ili ivana|ivana ili mihail|mihail</h4>"+
+					
+					"</body>" + 
 					"</html>");
 			
 			out.write(retVal.toString());
@@ -143,6 +150,87 @@ public class LoginController {
 		
 		response.sendRedirect(bURL+"Takmicenje");
 	}
+	
+	
+	/** obrada podataka forme za logovanje korisnika, post zahtev */
+	@SuppressWarnings("unchecked")
+	// GET: PrijavaOdjava/Login
+	@GetMapping(value="/Logout")
+	public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {	
+		
+//		response.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate"); // HTTP 1.1
+//		response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+//		response.setDateHeader("Expires", 0); // Proxies.
+		
+		Korisnik korisnik = (Korisnik) request.getSession().getAttribute(LoginController.KORISNIK_KEY);
+		String greska = "";
+		if(korisnik==null || korisnik.isUlogovan()==false )
+			greska="korisnik nije prijavljen<br/>";
+		
+		if(!greska.equals("")) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out;	
+			out = response.getWriter();
+			
+			StringBuilder retVal = new StringBuilder();
+			retVal.append(
+					"<!DOCTYPE html>\r\n" + 
+					"<html>\r\n" + 
+					"<head>\r\n" +
+//					"	<META HTTP-EQUIV=\"Cache-Control\" CONTENT=\"no-cache\">\r\n" + 
+//					"	<META HTTP-EQUIV=\"Pragma\" CONTENT=\"no-cache\"> \r\n" + 
+//					"	<META HTTP-EQUIV=\"Expires\" CONTENT=\"0\">\r\n" +
+					"	<meta charset=\"UTF-8\">\r\n" + 
+					"	<base href=\"/Takmicenja/\">	\r\n" + 
+					"	<title>Prijava korisnika</title>\r\n" + 
+					"	<link rel=\"stylesheet\" type=\"text/css\" href=\"css/StiloviForma.css\"/>\r\n" + 
+					"	<link rel=\"stylesheet\" type=\"text/css\" href=\"css/StiloviHorizontalniMeni.css\"/>\r\n" + 
+					"</head>\r\n" + 
+					"<body>\r\n");
+			if(!greska.equals(""))
+				retVal.append(
+					"	<div>"+greska+"</div>\r\n");
+			retVal.append(
+					"	<form method=\"post\" action=\"PrijavaOdjava/Login\">\r\n" + 
+					"		<table>\r\n" + 
+					"			<caption>Prijava korisnika na sistem</caption>\r\n" + 
+					"			<tr><th>Korisničko ime:</th><td><input type=\"text\" value=\"\" name=\"korisnickoIme\" required/></td></tr>\r\n" + 
+					"			<tr><th>Korisnicka šifra:</th><td><input type=\"password\" value=\"\" name=\"korisnickaSifra\" required/></td></tr>\r\n" + 
+					"			<tr><th></th><td><input type=\"submit\" value=\"Prijavi se\" /></td>\r\n" + 
+					"		</table>\r\n" + 
+					"	</form>" + 
+					"	<br/>" + 
+					"	<ul>" + 
+					"		<li><a href=\"PrijavaOdjava/Logout\">Odjavi se</a></li>\r\n" + 
+					"	</ul>" +
+					"						<hr>"
+					+ "						<h3>Test Podaci za korisnike su: </h3>"
+					+ "						<h4>Admin: pera | pera</h4>"
+					+ "						<h4>Takmicar: yelena | yelena ili ivana|ivana ili mihail|mihail</h4>" +
+					"</body>" + 
+					"</html>");
+			
+			out.write(retVal.toString());
+			return;
+		}
+		
+		korisnik.setUlogovan(false);
+		
+		request.getSession().removeAttribute(LoginController.KORISNIK_KEY);
+		request.getSession().invalidate();
+		response.sendRedirect(bURL+"PrijavaOdjava/Login");
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 }

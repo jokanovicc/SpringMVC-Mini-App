@@ -1,0 +1,6 @@
+pera;pera;Petar;Petrovic;true
+yelena;yelena;Yelena;Isinbayeva;false
+ivana;ivana;Ivana;Spanovic;false
+mihail;mihail;Mihail;Dudas;false
+
+

@@ -172,6 +172,15 @@ public class PrijavaKontroler {
 				"			</td>\r\n" + 
 				"		</tr>\r\n" + 
 				"	</table>\r\n");
+		
+		
+		retVal.append(
+				"	<ul>\r\n" + 
+				"		<li><a href=\"Takmicenje\">Vrati se na pocetnu</a></li>\r\n" + 
+				"	</ul>\r\n");
+		
+		
+		
 				
 		retVal.append(
 				"</body>\r\n"+
@@ -236,7 +245,7 @@ public class PrijavaKontroler {
 				"	<link rel=\"stylesheet\" type=\"text/css\" href=\"css/StiloviHorizontalniMeni.css\"/>\r\n"+
 				"</head>\r\n" + 
 				"<body>\r\n" + 
-				"	<div> Prijavljen je:  <strong> "+ korisnik.getIme() +" "+ korisnik.getPrezime() + "</strong> <hr>" +		
+				"	<div> Prijavljen je:  <strong> "+ korisnik.getIme() +" "+ korisnik.getPrezime() + "</strong></br> Prijava na takmicenje  <strong>"+takmicenje.getNaziv() +"|" + takmicenje.getGrad() + "</strong>  <hr>" +		
 				"	<form method=\"post\" action=\"Prijave/Create\">\r\n" + 
 				"		<table>\r\n" + 
 				"			<caption>Prijava</caption>\r\n");
@@ -247,7 +256,7 @@ public class PrijavaKontroler {
 				"				<th>Discipline:</th>\r\n"+
 				"				<td>\r\n"+		
 				"					<select name=\"discID\">\r\n");	
-		for (Disciplina d : takmicenje.getDiscipline()) { //ovde se biraju sve discipline, jer ne mogu pristupiti preko takmicenja jer baca null
+		for (Disciplina d : takmicenje.getDiscipline()) { 
 			retVal.append(
 				"						<option value=\""+d.getId()+"\" "+(d.equals(disciplina)?"selected":"")+">"+d.getNaziv()+"</option>\r\n");
 		}	
@@ -259,7 +268,7 @@ public class PrijavaKontroler {
 		
 		retVal.append(
 				"			<tr><th>drzava:</th><td><input type=\"text\" maxlength=\"3\" minlength=\"3\" required  name=\"drzava\"/></td></tr>\r\n" +
-						"		<tr><th>Takmicenje:</th><td><input type=\"text\" readonly value=\"" + takmicenje.getId() + "\"   name=\"takmicenjeID\"/></td></tr>\r\n" +
+						"	<input type=\"hidden\" readonly value=\"" + takmicenje.getId() + "\"   name=\"takmicenjeID\"/>" +
 				"			<tr><th></th><td><input type=\"submit\" value=\"Dodaj\" /></td></tr>\r\n" + 
 				"		</table>\r\n" + 
 				"	</form>\r\n" +
@@ -325,9 +334,11 @@ public class PrijavaKontroler {
 		LocalDateTime datumIVreme = LocalDateTime.now();
 		
 		Disciplina d = discService.findOne(discID);
+		Random random = new Random();
+		long randomVal = Math.abs(random.nextLong());
 		
 	
-		Prijava p = new Prijava(new Random().nextLong(), korisnik, drzava, disciplina, datumIVreme, takmicenje);
+		Prijava p = new Prijava(randomVal, korisnik, drzava, disciplina, datumIVreme, takmicenje);
 		
 		System.out.println("**********************************************************************************************************");
 		System.out.println(p);

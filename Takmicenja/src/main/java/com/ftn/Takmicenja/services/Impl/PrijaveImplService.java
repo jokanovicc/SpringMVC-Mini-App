@@ -218,7 +218,7 @@ public class PrijaveImplService implements PrijavaService {
 		Map<Long, Prijava> prijave = readFromFile();
 		
         if (!prijave.containsKey(id)) {
-            throw new IllegalArgumentException("tried to remove non existing projekcija");
+            throw new IllegalArgumentException("tried to remove non existing");
         }
 
         Prijava prijava = prijave.get(id);
@@ -235,7 +235,7 @@ public class PrijaveImplService implements PrijavaService {
 		Map<Long, Prijava> prijave = readFromFile();
 		for (Long id : ids) {
             if (!prijave.containsKey(id)) {
-                throw new IllegalArgumentException("tried to remove non existing projekcija");
+                throw new IllegalArgumentException("tried to remove non existing");
             }
             Prijava prijava = prijave.get(id);
             if (prijava != null) {

@@ -125,6 +125,12 @@ public class SvojePrijaveKontroler {
 				"			</td>\r\n" + 
 				"		</tr>\r\n" + 
 				"	</table>\r\n");
+		
+		retVal.append(
+				"	<ul>\r\n" + 
+				"		<li><a href=\"Takmicenje\">Vrati se na pocetnu</a></li>\r\n" + 
+				"	</ul>\r\n");
+		
 				
 		retVal.append(
 				"</body>\r\n"+

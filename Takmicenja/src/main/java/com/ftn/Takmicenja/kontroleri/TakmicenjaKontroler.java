@@ -91,7 +91,7 @@ public class TakmicenjaKontroler {
 				"	<link rel=\"stylesheet\" type=\"text/css\" href=\"css/StiloviHorizontalniMeni.css\"/>\r\n"+
 				"</head>\r\n" + 
 				"<body> "+
-				"	<div> Prijavljen je:  <strong> "+ korisnik.getIme() +" "+ korisnik.getPrezime() + "</strong> <hr>");
+				"	<div> Prijavljen je:  <strong> "+ korisnik.getIme() +" "+ korisnik.getPrezime() + "</strong>"+ "</br>"   + "</a> <a href=\"PrijavaOdjava/Logout\">Odjavi se</a></li></div>\r\n" +  "<hr>");
 			
 		retVal.append(	
 				"		<table>\r\n" + 
@@ -334,6 +334,7 @@ public class TakmicenjaKontroler {
 		}
 		
 		//discipline nisu vec cekirane nego moraju ispocetka
+		//ako korisnik nista ne izabere ostaju one stare
 		
 		List<Disciplina> d = discService.find(discIds);
 		
@@ -357,10 +358,10 @@ public class TakmicenjaKontroler {
 		
 		
 		
-		  if (datumIVreme1.isAfter(LocalDateTime.now())) {
+		  if (datumIVreme1.isAfter(LocalDateTime.now()) && datumIVreme1.isBefore(datumIVreme2) ) {
 		  takmicenje.setDatumPocetka(datumIVreme1);
 		  
-		  } if (datumIVreme2.isAfter(datumIVreme1)) {
+		  } if (datumIVreme2.isAfter(datumIVreme1) && datumIVreme2.isAfter(LocalDateTime.now())) {
 		  takmicenje.setDatumZavrsetka(datumIVreme2);
 		  
 		  }

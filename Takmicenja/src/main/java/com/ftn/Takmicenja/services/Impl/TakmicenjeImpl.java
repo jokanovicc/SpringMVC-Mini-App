@@ -124,7 +124,7 @@ public class TakmicenjeImpl implements TakmicenjaService {
                 lines.add(line);
                 ret.put(takmicenje.getId(), takmicenje);
             }
-            //pisanje svih redova za filmove
+
             Files.write(path, lines, Charset.forName("UTF-8"));
             System.out.println(" 1 JEL STIGLO DOVDE?");
 
@@ -240,7 +240,7 @@ public class TakmicenjeImpl implements TakmicenjaService {
 	        Map<Long, Takmicenje> takmicenja = readFromFile();
 
 	        if (!takmicenja.containsKey(id)) {
-	            throw new IllegalArgumentException("tried to remove non existing projekcija");
+	            throw new IllegalArgumentException("tried to remove non existing");
 	        }
 
 	        Takmicenje takmicenje = takmicenja.get(id);
@@ -256,7 +256,7 @@ public class TakmicenjeImpl implements TakmicenjaService {
 	        Map<Long, Takmicenje> takmicenja = readFromFile();
 	        for (Long id : ids) {
 	            if (!takmicenja.containsKey(id)) {
-	                throw new IllegalArgumentException("tried to remove non existing projekcija");
+	                throw new IllegalArgumentException("tried to remove non existing");
 	            }
 
 	            Takmicenje takmicenje = takmicenja.get(id);

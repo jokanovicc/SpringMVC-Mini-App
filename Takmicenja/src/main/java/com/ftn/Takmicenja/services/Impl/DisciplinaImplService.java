@@ -82,7 +82,7 @@ public class DisciplinaImplService implements DisciplinaService {
                 lines.add(line);
                 ret.put(disciplina.getId(),disciplina);
             }
-            //pisanje svih redova za filmove
+
             Files.write(path, lines, Charset.forName("UTF-8"));
 
         } catch (Exception e) {
@@ -155,8 +155,7 @@ public class DisciplinaImplService implements DisciplinaService {
 		Map<Long, Disciplina> discipline = readFromFile();
         Long nextId = nextId(discipline);
 
-        //u slučaju da projekcija nema id
-        //tada treba da se dodeli id
+
         if (disciplina.getId() == null) {
             disciplina.setId(nextId++);
 
@@ -177,8 +176,7 @@ public class DisciplinaImplService implements DisciplinaService {
 
         for (Disciplina disciplina: disciplineLista) {
 
-            //u slučaju da projekcija nema id
-            //tada treba da se dodeli id
+
             if (disciplina.getId() == null) {
                disciplina.setId(nextId++);
 
@@ -222,7 +220,7 @@ public class DisciplinaImplService implements DisciplinaService {
         Map<Long, Disciplina> discipline = readFromFile();
         
         if (!discipline.containsKey(id)) {
-            throw new IllegalArgumentException("tried to remove non existing projekcija");
+            throw new IllegalArgumentException("tried to remove non existing");
         }
 
         Disciplina disciplina = discipline.get(id);
@@ -239,7 +237,7 @@ public class DisciplinaImplService implements DisciplinaService {
         Map<Long, Disciplina> discipline = readFromFile();
         for (Long id : ids) {
             if (!discipline.containsKey(id)) {
-                throw new IllegalArgumentException("tried to remove non existing projekcija");
+                throw new IllegalArgumentException("tried to remove non existing");
             }
 
             Disciplina disciplina = discipline.get(id);
